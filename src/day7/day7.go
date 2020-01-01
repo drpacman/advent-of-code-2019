@@ -6,8 +6,8 @@ import (
 )
 
 func runAmplifiers(createProgram func() intcomp.Program, values []int) int {
-	amplifiers := make([]intcomp.Program, 5)
-	for i := 0; i < 5; i++ {
+	amplifiers := make([]intcomp.Program, len(values))
+	for i := 0; i < len(values); i++ {
 		amplifiers[i] = createProgram()
 		go amplifiers[i].ProcessProgram()
 		amplifiers[i].Input <- values[i]
@@ -16,11 +16,9 @@ func runAmplifiers(createProgram func() intcomp.Program, values []int) int {
 	input := 0
 	for !amplifiers[0].Halted {
 		amplifiers[0].Input <- input
-		amplifiers[1].Input <- <-amplifiers[0].Output
-		amplifiers[2].Input <- <-amplifiers[1].Output
-		amplifiers[3].Input <- <-amplifiers[2].Output
-		amplifiers[4].Input <- <-amplifiers[3].Output
-
+		for i := 0; i < len(amplifiers)-1; i++ {
+			amplifiers[i+1].Input <- <-amplifiers[i].Output
+		}
 		input = <-amplifiers[4].Output
 	}
 	return input
