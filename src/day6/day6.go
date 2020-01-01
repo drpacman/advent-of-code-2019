@@ -2,16 +2,13 @@ package main
 
 import (
 	"errors"
+	"files"
 	"fmt"
-	"io/ioutil"
 	"strings"
 )
 
 func readInput() map[string]string {
-	// read lines
-	data, _ := ioutil.ReadFile("input")
-	contents := string(data)
-	lines := strings.Split(contents, "\n")
+	lines := files.ReadLines("input")
 	orbits := make(map[string]string)
 	for _, s := range lines {
 		items := strings.Split(s, ")")
