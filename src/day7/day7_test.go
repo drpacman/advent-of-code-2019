@@ -4,13 +4,6 @@ import (
 	"testing"
 )
 
-func TestCombinations(t *testing.T) {
-	result := Combinations([]int{0,1,2,3,4})
-	if len(result) != 120 {
-		t.Errorf("Incorrect number of combinations - got %v expected %v", len(result), 120)
-	}
-}
-
 func TestProgramPart1Example1(t *testing.T) {
 	test1 := []int{3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0}
 	values1 := []int{4, 3, 2, 1, 0}
@@ -42,8 +35,8 @@ func TestProgramPart1Example3(t *testing.T) {
 }
 
 func TestProgramPart2Example1(t *testing.T) {
-	test1 := []int{3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5}
-	values1 := []int{9,8,7,6,5}
+	test1 := []int{3, 26, 1001, 26, -4, 26, 3, 27, 1002, 27, 2, 27, 1, 27, 26, 27, 4, 27, 1001, 28, -1, 28, 1005, 28, 6, 99, 0, 0, 5}
+	values1 := []int{9, 8, 7, 6, 5}
 	expected := 139629729
 	result := runProgram(test1, values1)
 	if result != expected {

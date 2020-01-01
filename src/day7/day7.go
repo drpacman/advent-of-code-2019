@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"intcomp"
+	"numbers"
 )
 
 func runAmplifiers(createProgram func() intcomp.Program, values []int) int {
@@ -31,31 +32,13 @@ func runProgram(instructions []int, values []int) int {
 	return runAmplifiers(programFactory, values)
 }
 
-func Combinations(combo []int) [][]int {
-	if len(combo) == 1 {
-		return [][]int{[]int{combo[0]}}
-	} else {
-		result := make([][]int, 0)
-		for i := 0; i < len(combo); i++ {
-			remainder := make([]int, 0)
-			remainder = append(remainder, combo[:i]...)
-			remainder = append(remainder, combo[i+1:]...)
-			var tail [][]int = Combinations(remainder)
-			for j := 0; j < len(tail); j++ {
-				result = append(result, append([]int{combo[i]}, tail[j]...))
-			}
-		}
-		return result
-	}
-}
-
 func run(phaseValues []int) (int, []int) {
 	var programFactory = func() intcomp.Program {
 		return intcomp.ReadProgram("input")
 	}
 	var max = 0
 	var maxValues = []int{0, 0, 0, 0, 0}
-	for _, values := range Combinations(phaseValues) {
+	for _, values := range numbers.Combinations(phaseValues) {
 		var n = runAmplifiers(programFactory, values)
 		if n > max {
 			max = n
