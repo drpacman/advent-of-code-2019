@@ -1,9 +1,17 @@
 package main
 
-import "testing"
+import (
+	"intcomp"
+	"testing"
+)
 
 func TestProgram(t *testing.T) {
-	var testProgramB Program = []int{3, 3, 1107, -1, 8, 3, 4, 3, 99}
-	testProgramB.processProgram()
-
+	var testProgramB intcomp.Program = intcomp.CreateProgram([]int{3, 3, 1107, -1, 8, 3, 4, 3, 99})
+	go testProgramB.ProcessProgram()
+	testProgramB.Input <- 1
+	result := <-testProgramB.Output
+	expected := 1
+	if result != expected {
+		t.Errorf("Got result %v, expected %v", result, expected)
+	}
 }
