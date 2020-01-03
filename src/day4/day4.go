@@ -6,7 +6,7 @@ import (
 )
 
 func meetsCriteriaPartB(value int) bool {
-	var digits = numbers.Digits(value)
+	var digits = numbers.Digits(int64(value))
 	var foundPair = false
 	for i := 0; i < 5; {
 		n := digits[i]
@@ -30,7 +30,7 @@ func meetsCriteriaPartB(value int) bool {
 }
 
 func meetsCriteriaPartA(value int) bool {
-	var digits = numbers.Digits(value)
+	var digits = numbers.Digits(int64(value))
 	var foundPair = false
 	for i := 0; i < 5; i++ {
 		if digits[i+1] < digits[i] {

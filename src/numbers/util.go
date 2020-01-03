@@ -4,6 +4,18 @@ import (
 	"math"
 )
 
+func MaxInt(x, y int) int {
+	return int(math.Max(float64(x), float64(y)))
+}
+
+func MinInt(x, y int) int {
+	return int(math.Min(float64(x), float64(y)))
+}
+
+func AbsInt(x int) int {
+	return int(math.Abs(float64(x)))
+}
+
 func Digits(value int64) []int {
 	var digits = make([]int, 0)
 	for value >= 10 {
