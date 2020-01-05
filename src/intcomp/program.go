@@ -41,6 +41,10 @@ func CreateProgram(instructions []int64) Program {
 		Output:       make(chan int64, 10)}
 }
 
+func (p *Program) Poke(value int64, index int) {
+	p.instructions[index] = value
+}
+
 func (p *Program) value(value, mode int64) int64 {
 	if mode == 0 {
 		return p.readMemory(value)
