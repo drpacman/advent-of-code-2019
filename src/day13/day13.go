@@ -2,6 +2,7 @@ package main
 
 import (
 	"display"
+	"flag"
 	"fmt"
 	"intcomp"
 	"strings"
@@ -52,7 +53,10 @@ func generateBoard(board [][]int64) string {
 	return output.String()
 }
 
-func part2(display *display.Display) {
+func part2(display *display.Display, delay int64) {
+	if display != nil {
+		defer display.Close()
+	}
 	p := intcomp.ReadProgram("input")
 	p.Poke(2, 0)
 	go p.ProcessProgram()
@@ -86,18 +90,29 @@ func part2(display *display.Display) {
 				default:
 					p.Input <- 0
 				}
-				display.SetContent(generateBoard(board))
-				time.Sleep(time.Duration(1 * time.Millisecond))
+				if display != nil {
+					display.SetContent(generateBoard(board))
+					time.Sleep(time.Duration(int64(delay)) * time.Millisecond)
+				}
 			}
 		}
 	}
 	fmt.Println("Part 2: ", score)
-	display.Close()
+
 }
 
 func main() {
+	delay := flag.Int("delay", 1, "How long to pause between frames")
+	flag.Parse()
+
+	fmt.Println(*delay)
+
 	part1()
-	display := display.CreateDisplay(800, 800)
-	go part2(display)
-	display.Show()
+	if *delay != 0 {
+		d := display.CreateDisplay(800, 800)
+		go part2(d, int64(*delay))
+		d.Show()
+	} else {
+		part2(nil, 0)
+	}
 }
