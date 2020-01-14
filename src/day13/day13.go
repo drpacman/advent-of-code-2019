@@ -5,7 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"intcomp"
-	"strings"
+	"render"
 	"time"
 )
 
@@ -31,26 +31,13 @@ func part1() {
 }
 
 func generateBoard(board [][]int64) string {
-	var output strings.Builder
-	for y := 0; y < len(board); y++ {
-		output.WriteString("<div><pre>")
-		for x := 0; x < len(board[y]); x++ {
-			entry := " "
-			switch board[y][x] {
-			case 1:
-				entry = "X"
-			case 2:
-				entry = "+"
-			case 3:
-				entry = "="
-			case 4:
-				entry = "O"
-			}
-			output.WriteString(entry)
-		}
-		output.WriteString("</pre></div>")
-	}
-	return output.String()
+	var chars = map[int64]string{
+		1: "X",
+		2: "+",
+		3: "=",
+		4: "O"}
+
+	return render.GenerateBoardHtml(board, chars)
 }
 
 func part2(display *display.Display, delay int64) {
