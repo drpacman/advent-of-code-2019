@@ -20,11 +20,16 @@ func generateBoard(board [][]int64, chars map[int64]string, rowStart, rowEnd str
 			output.WriteString(rowStart)
 		}
 		for x := 0; x < len(board[y]); x++ {
-			entry := chars[board[y][x]]
-			if entry == "" {
-				entry = " "
+			if chars != nil {
+				entry := chars[board[y][x]]
+				if entry == "" {
+					entry = " "
+				}
+				output.WriteString(entry)
+			} else {
+				output.WriteRune(rune(board[y][x]))
 			}
-			output.WriteString(entry)
+
 		}
 		if rowEnd != "" {
 			output.WriteString(rowEnd)
