@@ -26,8 +26,8 @@ func ReadProgram(filepath string) Program {
 	}
 	return Program{
 		instructions: ints,
-		Input:        make(chan int64, 10),
-		Output:       make(chan int64, 10),
+		Input:        make(chan int64, 1000),
+		Output:       make(chan int64, 1000),
 		Halted:       false,
 		relativeBase: 0}
 }
@@ -37,8 +37,8 @@ func CreateProgram(instructions []int64) Program {
 	copy(ins, instructions)
 	return Program{
 		instructions: ins,
-		Input:        make(chan int64, 10),
-		Output:       make(chan int64, 10)}
+		Input:        make(chan int64, 1000),
+		Output:       make(chan int64, 1000)}
 }
 
 func (p *Program) Poke(value int64, index int) {
@@ -55,7 +55,7 @@ func (p *Program) value(value, mode int64) int64 {
 }
 
 func (p *Program) readMemory(pos int64) int64 {
-	if pos > int64(len(p.instructions)) {
+	if pos >= int64(len(p.instructions)) {
 		return 0
 	}
 	return p.instructions[pos]
